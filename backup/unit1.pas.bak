@@ -1,0 +1,123 @@
+unit Unit1;
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
+  ExtCtrls, Spin, FPCanvas;
+
+type
+
+  { TForm1 }
+
+  TForm1 = class(TForm)
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    BitBtn3: TBitBtn;
+    BitBtn4: TBitBtn;
+    BitBtn5: TBitBtn;
+    BitBtn6: TBitBtn;
+    BitBtn7: TBitBtn;
+    BitBtn8: TBitBtn;
+    BitBtn9: TBitBtn;
+    Canvas1: TImage;
+    DashBox: TComboBox;
+    DrawBox: TGroupBox;
+    LineBox: TGroupBox;
+    DashLabel: TLabel;
+    WidthSpin: TSpinEdit;
+    WidthLabel: TLabel;
+    ObjekBox: TGroupBox;
+    ScrollBox1: TScrollBox;
+    ToolBox: TGroupBox;
+    FileBox: TGroupBox;
+    OpenButton: TSpeedButton;
+    SaveButton: TSpeedButton;
+    SpeedButton3: TSpeedButton;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure Canvas1Click(Sender: TObject);
+    procedure DashBoxChange(Sender: TObject);
+    procedure ObjekBoxClick(Sender: TObject);
+    procedure FileBoxClick(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
+    procedure ObjekClick(Sender: TObject);
+    procedure OpenButtonClick(Sender: TObject);
+    procedure PaintBox1Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
+  private
+
+  public
+
+  end;
+
+var
+  Form1: TForm1;
+
+  style_line: TFPPenStyle;
+
+implementation
+
+{$R *.lfm}
+
+{ TForm1 }
+
+procedure TForm1.Label1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.FileBoxClick(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.ObjekBoxClick(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.Canvas1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.DashBoxChange(Sender: TObject);
+begin
+  case DashBox.ItemIndex of
+  0 : style_line:=psSolid;
+  1 : style_line:=psDot;
+  2 : style_line:=psDash;
+  3 : style_line:=psDashDot;
+  4 : style_line:=psDashDotDot;
+  end;
+end;
+
+procedure TForm1.ObjekClick(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.OpenButtonClick(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.PaintBox1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.SpeedButton3Click(Sender: TObject);
+begin
+
+end;
+
+end.
+

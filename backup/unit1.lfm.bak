@@ -1,0 +1,220 @@
+object Form1: TForm1
+  Left = 599
+  Height = 439
+  Top = 156
+  Width = 660
+  Caption = 'Form1'
+  ClientHeight = 439
+  ClientWidth = 660
+  Color = clGradientActiveCaption
+  LCLVersion = '2.0.12.0'
+  object ToolBox: TGroupBox
+    Left = 0
+    Height = 152
+    Top = 0
+    Width = 1366
+    ClientHeight = 132
+    ClientWidth = 1362
+    Color = clMenu
+    ParentColor = False
+    TabOrder = 0
+    object ObjekBox: TGroupBox
+      Left = 184
+      Height = 121
+      Top = 0
+      Width = 168
+      Caption = 'Objek'
+      ClientHeight = 101
+      ClientWidth = 164
+      TabOrder = 0
+      OnClick = ObjekClick
+      object ScrollBox1: TScrollBox
+        Left = 8
+        Height = 88
+        Top = 0
+        Width = 152
+        HorzScrollBar.Page = 128
+        VertScrollBar.Page = 84
+        ClientHeight = 84
+        ClientWidth = 131
+        TabOrder = 0
+        object BitBtn1: TBitBtn
+          Left = 8
+          Height = 50
+          Top = 8
+          Width = 56
+          Caption = 'BitBtn1'
+          OnClick = BitBtn1Click
+          TabOrder = 0
+        end
+        object BitBtn2: TBitBtn
+          Left = 72
+          Height = 50
+          Top = 8
+          Width = 56
+          Caption = 'BitBtn2'
+          OnClick = BitBtn1Click
+          TabOrder = 1
+        end
+        object BitBtn3: TBitBtn
+          Left = 8
+          Height = 50
+          Top = 64
+          Width = 56
+          Caption = 'BitBtn3'
+          OnClick = BitBtn1Click
+          TabOrder = 2
+        end
+        object BitBtn4: TBitBtn
+          Left = 72
+          Height = 50
+          Top = 64
+          Width = 56
+          Caption = 'BitBtn4'
+          OnClick = BitBtn1Click
+          TabOrder = 3
+        end
+        object BitBtn5: TBitBtn
+          Left = 8
+          Height = 50
+          Top = 120
+          Width = 56
+          Caption = 'BitBtn5'
+          OnClick = BitBtn1Click
+          TabOrder = 4
+        end
+        object BitBtn6: TBitBtn
+          Left = 72
+          Height = 50
+          Top = 120
+          Width = 56
+          Caption = 'BitBtn6'
+          OnClick = BitBtn1Click
+          TabOrder = 5
+        end
+      end
+    end
+    object FileBox: TGroupBox
+      Left = 8
+      Height = 121
+      Top = 0
+      Width = 160
+      Caption = 'File'
+      ClientHeight = 101
+      ClientWidth = 156
+      TabOrder = 1
+      OnClick = FileBoxClick
+      object OpenButton: TSpeedButton
+        Left = 8
+        Height = 28
+        Top = 8
+        Width = 60
+        Caption = 'Open'
+        OnClick = OpenButtonClick
+      end
+      object SpeedButton3: TSpeedButton
+        Left = 48
+        Height = 28
+        Top = 51
+        Width = 60
+        Caption = 'Clear'
+        OnClick = SpeedButton3Click
+      end
+      object SaveButton: TSpeedButton
+        Left = 88
+        Height = 28
+        Top = 8
+        Width = 60
+        Caption = 'Save'
+        OnClick = OpenButtonClick
+      end
+    end
+    object DrawBox: TGroupBox
+      Left = 360
+      Height = 121
+      Top = 0
+      Width = 133
+      Caption = 'Draw'
+      ClientHeight = 101
+      ClientWidth = 129
+      TabOrder = 2
+      object BitBtn7: TBitBtn
+        Left = 8
+        Height = 37
+        Top = 2
+        Width = 49
+        Caption = 'Pencil'
+        TabOrder = 0
+      end
+      object BitBtn8: TBitBtn
+        Left = 72
+        Height = 37
+        Top = 2
+        Width = 49
+        Caption = 'Line'
+        TabOrder = 1
+      end
+      object BitBtn9: TBitBtn
+        Left = 40
+        Height = 37
+        Top = 48
+        Width = 49
+        Caption = 'Penghapus'
+        TabOrder = 2
+      end
+    end
+    object LineBox: TGroupBox
+      Left = 504
+      Height = 121
+      Top = 0
+      Width = 104
+      Caption = 'Line'
+      ClientHeight = 101
+      ClientWidth = 100
+      TabOrder = 3
+      object WidthLabel: TLabel
+        Left = 32
+        Height = 15
+        Top = 0
+        Width = 32
+        Caption = 'Width'
+        ParentColor = False
+      end
+      object DashLabel: TLabel
+        Left = 38
+        Height = 15
+        Top = 51
+        Width = 26
+        Caption = 'Dash'
+        ParentColor = False
+      end
+      object WidthSpin: TSpinEdit
+        Left = 8
+        Height = 23
+        Top = 23
+        Width = 88
+        TabOrder = 0
+        Value = 1
+      end
+      object DashBox: TComboBox
+        Left = 8
+        Height = 23
+        Top = 72
+        Width = 88
+        ItemHeight = 15
+        ItemWidth = 5
+        OnChange = DashBoxChange
+        ParentFont = False
+        TabOrder = 1
+        Text = 'Solid'
+      end
+    end
+  end
+  object Canvas1: TImage
+    Left = 18
+    Height = 544
+    Top = 176
+    Width = 1326
+    OnClick = Canvas1Click
+  end
+end
