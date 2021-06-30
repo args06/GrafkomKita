@@ -104,6 +104,8 @@ type
     procedure RightBtnClick(Sender: TObject);
     procedure RightDownBtnClick(Sender: TObject);
     procedure RightUpBtnClick(Sender: TObject);
+    procedure RotateLeftClick(Sender: TObject);
+    procedure RotateRightClick(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
     procedure SquareBtnClick(Sender: TObject);
     procedure TriangleBtnClick(Sender: TObject);
@@ -112,6 +114,7 @@ type
     procedure WidthSpinClick(Sender: TObject);
     procedure MidPoint;
     procedure DrawObject(Sender: TObject);
+    procedure RotatingObject(Sender: TObject);
   private
 
   public
@@ -137,6 +140,7 @@ var
   fill_color: Integer;
   preX, preY: Integer;
   move_value: Integer;
+  rotate_value: Double;
   r: Integer;
 
   selected_object: String;
@@ -370,10 +374,10 @@ begin
      end
      else if RhombusBtn.Active = True then
      begin
-        CanvasBox.Canvas.Line(preX, preY+((Y-preY) div 2),preX+((X-preX) div 2),preY);
-        CanvasBox.Canvas.Line(preX+((X-preX) div 2), preY, X,preY+((Y-preY) div 2));
-        CanvasBox.Canvas.Line(X, preY+((Y-preY) div 2), preX+((X-preX) div 2), Y);
-        CanvasBox.Canvas.Line(preX+((X-preX) div 2), Y, preX,preY+((Y-preY) div 2) );
+        bitmap.Canvas.Line(preX, preY+((Y-preY) div 2),preX+((X-preX) div 2),preY);
+        bitmap.Canvas.Line(preX+((X-preX) div 2), preY, X,preY+((Y-preY) div 2));
+        bitmap.Canvas.Line(X, preY+((Y-preY) div 2), preX+((X-preX) div 2), Y);
+        bitmap.Canvas.Line(preX+((X-preX) div 2), Y, preX,preY+((Y-preY) div 2) );
      end
      else if BucketBtn.Active = True then
      begin
@@ -918,6 +922,114 @@ begin
   DrawObject(Sender);
 end;
 
+procedure TForm1.RotatingObject(Sender: TObject);
+var
+  i,tx,ty : integer;
+begin
+  MidPoint;
+
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].X:=SquarePoint[i].X-TOB.x;
+          SquarePoint[i].Y:=SquarePoint[i].Y-TOB.y;
+
+          tx:=SquarePoint[i].X;
+          ty:=SquarePoint[i].Y;
+
+          SquarePoint[i].X:=round(tx*cos(rotate_value)-ty*sin(rotate_value));
+          SquarePoint[i].Y:=round(tx*sin(rotate_value)+ty*cos(rotate_value));
+
+          SquarePoint[i].X:=SquarePoint[i].X+TOB.x;
+          SquarePoint[i].Y:=SquarePoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].X:=PentagonPoint[i].X-TOB.x;
+          PentagonPoint[i].Y:=PentagonPoint[i].Y-TOB.y;
+
+          tx:=PentagonPoint[i].X;
+          ty:=PentagonPoint[i].Y;
+
+          PentagonPoint[i].X:=round(tx*cos(rotate_value)-ty*sin(rotate_value));
+          PentagonPoint[i].Y:=round(tx*sin(rotate_value)+ty*cos(rotate_value));
+
+          PentagonPoint[i].X:=PentagonPoint[i].X+TOB.x;
+          PentagonPoint[i].Y:=PentagonPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].X:=HexagonPoint[i].X-TOB.x;
+          HexagonPoint[i].Y:=HexagonPoint[i].Y-TOB.y;
+
+          tx:=HexagonPoint[i].X;
+          ty:=HexagonPoint[i].Y;
+
+          HexagonPoint[i].X:=round(tx*cos(rotate_value)-ty*sin(rotate_value));
+          HexagonPoint[i].Y:=round(tx*sin(rotate_value)+ty*cos(rotate_value));
+
+          HexagonPoint[i].X:=HexagonPoint[i].X+TOB.x;
+          HexagonPoint[i].Y:=HexagonPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].X:=TrianglePoint[i].X-TOB.x;
+          TrianglePoint[i].Y:=TrianglePoint[i].Y-TOB.y;
+
+          tx:=TrianglePoint[i].X;
+          ty:=TrianglePoint[i].Y;
+
+          TrianglePoint[i].X:=round(tx*cos(rotate_value)-ty*sin(rotate_value));
+          TrianglePoint[i].Y:=round(tx*sin(rotate_value)+ty*cos(rotate_value));
+
+          TrianglePoint[i].X:=TrianglePoint[i].X+TOB.x;
+          TrianglePoint[i].Y:=TrianglePoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].X:=RhombusPoint[i].X-TOB.x;
+          RhombusPoint[i].Y:=RhombusPoint[i].Y-TOB.y;
+
+          tx:=RhombusPoint[i].X;
+          ty:=RhombusPoint[i].Y;
+
+          RhombusPoint[i].X:=round(tx*cos(rotate_value)-ty*sin(rotate_value));
+          RhombusPoint[i].Y:=round(tx*sin(rotate_value)+ty*cos(rotate_value));
+
+          RhombusPoint[i].X:=RhombusPoint[i].X+TOB.x;
+          RhombusPoint[i].Y:=RhombusPoint[i].Y+TOB.y;
+     end;
+  end;
+
+  DrawObject(Sender);
+end;
+
+procedure TForm1.RotateLeftClick(Sender: TObject);
+
+begin
+  rotate_value:= 0 - ((RotateSpin.Value Mod 360) / (180*PI));
+  RotatingObject(Sender);
+end;
+
+procedure TForm1.RotateRightClick(Sender: TObject);
+begin
+  rotate_value:= (RotateSpin.Value Mod 360) / (180*PI);
+  RotatingObject(Sender);
+end;
+
 procedure TForm1.SaveButtonClick(Sender: TObject);
 begin
   if SaveDialog1.Execute then
@@ -1022,7 +1134,7 @@ begin
 
   if (selected_object = 'Square') then
   begin
-    CanvasBox.Canvas.Polyline(SquarePoint);
+    //CanvasBox.Canvas.Polyline(SquarePoint);
     bitmap.Canvas.Polyline(SquarePoint);
   end
   else if (selected_object = 'Circle') then

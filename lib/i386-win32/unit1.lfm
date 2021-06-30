@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 33
+  Left = 0
   Height = 984
-  Top = 184
+  Top = 76
   Width = 1898
   Caption = 'Grafkom Kita'
   ClientHeight = 984
@@ -1628,6 +1628,7 @@ object Form1: TForm1
           0000000000000000000000000000000000000000000000000000000000000000
           000000000000000000000000000000000000000000000000000000000000
         }
+        OnClick = RotateLeftClick
         TabOrder = 1
       end
       object RotateRight: TBitBtn
@@ -1717,6 +1718,7 @@ object Form1: TForm1
           0000000000000000000000000000000000000000000000000000000000010000
           0087000000C10000000E0000000000000000000000000000000000000000
         }
+        OnClick = RotateRightClick
         TabOrder = 2
       end
     end
