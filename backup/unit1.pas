@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
-  ExtCtrls, Spin, FPCanvas, FileCtrl;
+  ExtCtrls, Spin, FPCanvas, FileCtrl, Menus;
 
 type
 
@@ -16,12 +16,18 @@ type
     CanvasBox: TPaintBox;
     CircleBtn: TBitBtn;
     BitBtn10: TBitBtn;
+    FillLabel: TLabel;
+    RotateBox: TGroupBox;
+    LineLabel: TLabel;
     LineColor: TColorButton;
     FillColor: TColorButton;
     OpenDialog1: TOpenDialog;
     PaintBox1: TPaintBox;
     SaveDialog1: TSaveDialog;
     ScrollBox2: TScrollBox;
+    RotateRight: TSpeedButton;
+    RotateLeft: TSpeedButton;
+    RotateSpin: TSpinEdit;
     SquareBtn: TBitBtn;
     PentagonBtn: TBitBtn;
     HexagonBtn: TBitBtn;
@@ -64,6 +70,7 @@ type
     FileBox: TGroupBox;
     SaveButton: TSpeedButton;
     ClearButton: TSpeedButton;
+    procedure BucketBtnClick(Sender: TObject);
     procedure CanvasBoxMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure CanvasBoxMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -73,20 +80,39 @@ type
     procedure CircleBtnClick(Sender: TObject);
     procedure CanvasBoxClick(Sender: TObject);
     procedure dash_boxChange(Sender: TObject);
+    procedure DownBtnClick(Sender: TObject);
     procedure EraserBtnClick(Sender: TObject);
-    procedure FillColorClick(Sender: TObject);
+    procedure FillColorColorChanged(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure HexagonBtnClick(Sender: TObject);
+    procedure LeftBtnClick(Sender: TObject);
+    procedure LeftDownBtnClick(Sender: TObject);
+    procedure LeftUpBtnClick(Sender: TObject);
+    procedure LineBtnClick(Sender: TObject);
     procedure LineColorClick(Sender: TObject);
     procedure LineColorColorChanged(Sender: TObject);
+    procedure MoveSpinChange(Sender: TObject);
+    procedure MoveSpinClick(Sender: TObject);
     procedure ObjekBoxClick(Sender: TObject);
     procedure FileBoxClick(Sender: TObject);
-    procedure Label1Click(Sender: TObject);
+    procedure LineLabelClick(Sender: TObject);
     procedure ObjekClick(Sender: TObject);
     procedure OpenButtonClick(Sender: TObject);
     procedure ClearButtonClick(Sender: TObject);
     procedure PencilBtnClick(Sender: TObject);
+    procedure PentagonBtnClick(Sender: TObject);
+    procedure RhombusBtnClick(Sender: TObject);
+    procedure RightBtnClick(Sender: TObject);
+    procedure RightDownBtnClick(Sender: TObject);
+    procedure RightUpBtnClick(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
+    procedure SquareBtnClick(Sender: TObject);
+    procedure TriangleBtnClick(Sender: TObject);
+    procedure UpBtnClick(Sender: TObject);
     procedure WidthSpinChange(Sender: TObject);
+    procedure WidthSpinClick(Sender: TObject);
+    procedure MidPoint;
+    procedure DrawObject(Sender: TObject);
   private
 
   public
@@ -101,15 +127,20 @@ var
   SquarePoint : array[1..5] of TPoint;
   PentagonPoint : array[1..6] of TPoint;
   HexagonPoint : array[1..7] of TPoint;
-  Triangle : array[1..4] of TPoint;
-  Rhombus : array[1..4] of TPoint;
+  TrianglePoint : array[1..4] of TPoint;
+  RhombusPoint : array[1..5] of TPoint;
+  TOB : TPoint;
 
   style_line: TFPPenStyle;
   draw: Boolean;
   line_width: Integer;
   line_color: Integer;
   fill_color: Integer;
-  width_canvas, height_canvas: Integer;
+  preX, preY: Integer;
+  move_value: Integer;
+  r: Integer;
+
+  selected_object: String;
 
 implementation
 
@@ -117,7 +148,7 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.Label1Click(Sender: TObject);
+procedure TForm1.LineLabelClick(Sender: TObject);
 begin
 
 end;
@@ -134,36 +165,251 @@ end;
 
 procedure TForm1.CircleBtnClick(Sender: TObject);
 begin
-
+  selected_object:= 'Circle';
 end;
 
 procedure TForm1.CanvasBoxMouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   draw:= True;
-  CanvasBox.Canvas.MoveTo(X, Y);
-  bitmap.Canvas.MoveTo(X, Y);
+  preX:= X;
+  preY:= Y;
+  //CanvasBox.Canvas.MoveTo(X, Y);
+end;
+
+procedure TForm1.BucketBtnClick(Sender: TObject);
+var
+  TempColor : TColor;
+begin
+  TempColor := bitmap.Canvas.Pixels[X, Y];
+  bitmap.Canvas.Brush.Style := bsSolid;
+  bitmap.Canvas.Brush.Color :=FillColor.ButtonColor;
+  bitmap.Canvas.FloodFill(X, Y, TempColor,fsSurface);
+  bitmap.Canvas.Brush.Style := bsClear;
+  CanvasBoxPaint(Sender);
 end;
 
 procedure TForm1.CanvasBoxMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
 begin
   if draw=True then
   begin
-        CanvasBox.Canvas.LineTo(X, Y);
-        bitmap.Canvas.LineTo(X, Y);
-        CoordinateX.Text:= IntToStr(X);
-        CoordinateY.Text:= IntToStr(Y);
+     if PencilBtn.Active = True then
+     begin
+        CanvasBox.Canvas.Line(preX, preY, X, Y);
+        bitmap.Canvas.Line(preX, preY, X, Y);
+        preX:= X;
+        preY:= Y;
+     end
+     else if EraserBtn.Active = True then
+     begin
+        CanvasBox.Canvas.Line(preX, preY, X, Y);
+        bitmap.Canvas.Line(preX, preY, X, Y);
+        CanvasBox.Canvas.Pen.Color:=clWhite;
+        bitmap.Canvas.Pen.Color:=clWhite;
+        bitmap.Canvas.Pen.Width:= line_width;
+        preX:= X;
+        preY:= Y;
+     end
+     else if LineBtn.Active = True then
+     begin
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Line(preX, preY, X, Y);
+     end
+     else if SquareBtn.Active = True then
+     begin
+        CanvasBox.Cursor:=crCross;
+        dash_box.Enabled:=True;
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Rectangle(preX, preY, X, Y);
+        SquarePoint[1].x:=preX;
+        SquarePoint[1].y:=Y;
+        SquarePoint[2].x:=X;
+        SquarePoint[2].y:=Y;
+        SquarePoint[3].x:=X;
+        SquarePoint[3].y:=preY;
+        SquarePoint[4].x:=preX;
+        SquarePoint[4].y:=preY;
+        SquarePoint[5].x:=SquarePoint[1].x;
+        SquarePoint[5].y:=SquarePoint[1].y;
+     end
+     else if CircleBtn.Active = True then
+     begin
+        CanvasBox.Cursor:=crCross;
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Ellipse(preX, preY, X, Y);
+        CirclePoint[1].x:=preX;
+        CirclePoint[1].y:=preY;
+        CirclePoint[2].x:=X;
+        CirclePoint[2].y:=Y;
+     end
+     else if PentagonBtn.Active = True then
+     begin
+        CanvasBox.Cursor:=crCross;
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Line(preX, preY+((Y-preY)div 2), preX+((X-preX)div 2), preY);
+        CanvasBox.Canvas.Line(preX+((X-preX)div 2), preY, X, preY+((Y-preY)div 2));
+        CanvasBox.Canvas.Line(X, preY+((Y-preY)div 2), preX+((X-preX)*3 div 4), Y);
+        CanvasBox.Canvas.Line(preX+((X-preX)*3 div 4), Y, preX+((X-preX) div 4), Y);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 4), Y, preX, preY+((Y-preY)div 2));
+        PentagonPoint[1].x:=preX;
+        PentagonPoint[1].y:=preY+((Y-preY)div 2);
+        PentagonPoint[2].x:=preX+((X-preX)div 2);
+        PentagonPoint[2].y:=preY;
+        PentagonPoint[3].x:=X;
+        PentagonPoint[3].y:=preY+((Y-preY)div 2);
+        PentagonPoint[4].x:=preX+((X-preX)*3 div 4);
+        PentagonPoint[4].y:=Y;
+        PentagonPoint[5].x:=preX+((X-preX) div 4);
+        PentagonPoint[5].y:=Y;
+        PentagonPoint[6].x:=PentagonPoint[1].x;
+        PentagonPoint[6].y:=PentagonPoint[1].y;
+     end
+     else if HexagonBtn.Active = True then
+     begin
+        CanvasBox.Cursor:=crCross;
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Line(preX, preY+((Y-preY) div 2),preX+((X-preX) div 4),preY);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 4),preY, preX+((X-preX)*3 div 4),preY);
+        CanvasBox.Canvas.Line(preX+((X-preX)*3 div 4), preY, X,preY+((Y-PreY) div 2));
+        CanvasBox.Canvas.Line(X, preY+((Y-preY) div 2), preX+((X-preX)*3 div 4), Y);
+        CanvasBox.Canvas.Line(preX+((X-preX)*3 div 4), Y,preX+((X-preX) div 4), Y);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 4), Y, preX,preY+((Y-preY) div 2) );
+        HexagonPoint[1].x:=preX;
+        HexagonPoint[1].y:=preY+((Y-preY) div 2);
+        HexagonPoint[2].x:=preX+((X-preX) div 4);
+        HexagonPoint[2].y:=preY;
+        HexagonPoint[3].x:=preX+((X-preX)*3 div 4);
+        HexagonPoint[3].y:=preY;
+        HexagonPoint[4].x:=X;
+        HexagonPoint[4].y:=preY+((Y-preY) div 2);
+        HexagonPoint[5].x:=preX+((X-preX)*3 div 4);
+        HexagonPoint[5].y:=Y;
+        HexagonPoint[6].x:=preX+((X-preX) div 4);
+        HexagonPoint[6].y:=Y;
+        HexagonPoint[7].x:=HexagonPoint[1].x;
+        HexagonPoint[7].y:=HexagonPoint[1].y;
+     end
+     else if TriangleBtn.Active = True then
+     begin
+        CanvasBox.Cursor:=crCross;
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Line(preX,Y,preX+((X-preX) div 2), preY);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 2),preY,X,Y);
+        CanvasBox.Canvas.Line(X,Y,preX,Y);
+        TrianglePoint[1].x:=preX;
+        TrianglePoint[1].y:=Y;
+        TrianglePoint[2].x:=preX+((X-preX) div 2);
+        TrianglePoint[2].y:=preY;
+        TrianglePoint[3].x:=X;
+        TrianglePoint[3].y:=Y;
+        TrianglePoint[4].x:=TrianglePoint[1].x;
+        TrianglePoint[4].y:=TrianglePoint[1].y;
+     end
+     else if RhombusBtn.Active = True then
+     begin
+        CanvasBox.Cursor:=crCross;
+        CanvasBoxPaint(Sender);
+        CanvasBox.Canvas.Line(preX, preY+((Y-preY) div 2),preX+((X-preX) div 2),preY);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 2), preY, X,preY+((Y-preY) div 2));
+        CanvasBox.Canvas.Line(X, preY+((Y-preY) div 2), preX+((X-preX) div 2), Y);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 2), Y, preX,preY+((Y-preY) div 2) );
+        RhombusPoint[1].x:=preX;
+        RhombusPoint[1].y:=preY+((Y-preY) div 2);
+        RhombusPoint[2].x:=preX+((X-preX) div 2);
+        RhombusPoint[2].y:=preY;
+        RhombusPoint[3].x:=X;
+        RhombusPoint[3].y:=preY+((Y-preY) div 2);
+        RhombusPoint[4].x:=preX+((X-preX) div 2);
+        RhombusPoint[4].y:=Y;
+        RhombusPoint[5].x:=RhombusPoint[1].x;
+        RhombusPoint[5].y:=RhombusPoint[1].y;
+     end;
+
+     CoordinateX.Text:= IntToStr(X);
+     CoordinateY.Text:= IntToStr(Y);
   end;
 end;
 
 procedure TForm1.CanvasBoxMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
+  if draw=True then
+  begin
+     CanvasBox.Cursor:=crHandPoint;
+     CanvasBox.Canvas.Pen.Width:= line_width;
+     CanvasBox.Canvas.Pen.Color:= line_color;
+     CanvasBox.Canvas.Pen.Style:= style_line;
+     bitmap.Canvas.Pen.Width:= line_width;
+     bitmap.Canvas.Pen.Color:= line_color;
+     bitmap.Canvas.Pen.Style:= style_line;
+
+     if LineBtn.Active = True then
+     begin
+        bitmap.Canvas.Line(preX, preY, X, Y);
+     end
+     else if SquareBtn.Active = True then
+     begin
+        bitmap.Canvas.Rectangle(preX, preY, X, Y);
+        dash_box.Enabled:=True;
+     end
+     else if CircleBtn.Active = True then
+     begin
+        bitmap.Canvas.Ellipse(preX, preY, X, Y);
+     end
+     else if PentagonBtn.Active = True then
+     begin
+        bitmap.Canvas.Line(preX, preY+((Y-preY)div 2), preX+((X-preX)div 2), preY);
+        bitmap.Canvas.Line(preX+((X-preX)div 2), preY, X, preY+((Y-preY)div 2));
+        bitmap.Canvas.Line(X, preY+((Y-preY)div 2), preX+((X-preX)*3 div 4), Y);
+        bitmap.Canvas.Line(preX+((X-preX)*3 div 4), Y, preX+((X-preX) div 4), Y);
+        bitmap.Canvas.Line(preX+((X-preX) div 4), Y, preX, preY+((Y-preY)div 2));
+     end
+     else if HexagonBtn.Active = True then
+     begin
+        bitmap.Canvas.Line(preX, preY+((Y-preY) div 2),preX+((X-preX) div 4),preY);
+        bitmap.Canvas.Line(preX+((X-preX) div 4),preY, preX+((X-preX)*3 div 4),preY);
+        bitmap.Canvas.Line(preX+((X-preX)*3 div 4), preY, X,preY+((Y-PreY) div 2));
+        bitmap.Canvas.Line(X, preY+((Y-preY) div 2), preX+((X-preX)*3 div 4), Y);
+        bitmap.Canvas.Line(preX+((X-preX)*3 div 4), Y,preX+((X-preX) div 4), Y);
+        bitmap.Canvas.Line(preX+((X-preX) div 4), Y, preX,preY+((Y-preY) div 2) );
+     end
+     else if TriangleBtn.Active = True then
+     begin
+        bitmap.Canvas.Line(preX,Y,preX+((X-preX) div 2), preY);
+        bitmap.Canvas.Line(preX+((X-preX) div 2),preY,X,Y);
+        bitmap.Canvas.Line(preX,Y,X,Y);
+     end
+     else if RhombusBtn.Active = True then
+     begin
+        CanvasBox.Canvas.Line(preX, preY+((Y-preY) div 2),preX+((X-preX) div 2),preY);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 2), preY, X,preY+((Y-preY) div 2));
+        CanvasBox.Canvas.Line(X, preY+((Y-preY) div 2), preX+((X-preX) div 2), Y);
+        CanvasBox.Canvas.Line(preX+((X-preX) div 2), Y, preX,preY+((Y-preY) div 2) );
+     end;
+     //else if BucketBtn.Active = True then
+     //begin
+     //
+     //end
+     //else if EyedropBtn.Active = True then
+     //begin
+     //   FillColor.ButtonColor:=CanvasBox.Canvas.Pixels[X,Y];
+     //   CanvasBoxPaint(Sender);
+     //end;
+
+  end;
   draw:=False;
 end;
 
 procedure TForm1.CanvasBoxPaint(Sender: TObject);
 begin
+  if CanvasBox.Width<>bitmap.Width then begin
+    CanvasBox.Width:=bitmap.Width;
+    Exit;
+  end;
+  if CanvasBox.Height<>bitmap.Height then begin
+   CanvasBox.Height:=bitmap.Height;
+    Exit;
+  end;
   CanvasBox.Canvas.Draw(0,0,bitmap);
 end;
 
@@ -184,32 +430,254 @@ begin
   CanvasBox.Canvas.Pen.Style:= style_line;
 end;
 
+procedure TForm1.DownBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].Y:=SquarePoint[i].Y+move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].Y:=CirclePoint[i].Y+move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].Y:=PentagonPoint[i].Y+move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].Y:=HexagonPoint[i].Y+move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].Y:=TrianglePoint[i].Y+move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].Y:=RhombusPoint[i].Y+move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
 procedure TForm1.EraserBtnClick(Sender: TObject);
 begin
   CanvasBox.Canvas.Pen.Width:= line_width;
   CanvasBox.Canvas.Pen.Color:= clWhite;
 end;
 
-procedure TForm1.FillColorClick(Sender: TObject);
+
+procedure TForm1.FillColorColorChanged(Sender: TObject);
 begin
   fill_color:= FillColor.ButtonColor;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  width_canvas:= CanvasBox.Width;
-  height_canvas:= CanvasBox.Height;
-
-  bitmap := TBitmap.Create;
-  bitmap.Width := CanvasBox.Width;
-  bitmap.Height := CanvasBox.Height;
-  bitmap.PixelFormat := pf24bit;
-
-  bitmap.Canvas.Pen.Color:=clWhite;
-  bitmap.Canvas.Brush.Color:=clWhite;
-  bitmap.Canvas.FillRect(0,0,bitmap.Width,bitmap.Height);
 
   ClearButtonClick(Sender);
+  CanvasBoxPaint(Sender);
+end;
+
+procedure TForm1.HexagonBtnClick(Sender: TObject);
+begin
+  selected_object:= 'Hexagon';
+end;
+
+procedure TForm1.LeftBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].X:=SquarePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].X:=CirclePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].X:=PentagonPoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].X:=HexagonPoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].X:=TrianglePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].X:=RhombusPoint[i].X-move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
+procedure TForm1.LeftDownBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].Y:=SquarePoint[i].Y+move_value;
+          SquarePoint[i].X:=SquarePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].Y:=CirclePoint[i].Y+move_value;
+          CirclePoint[i].X:=CirclePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].Y:=PentagonPoint[i].Y+move_value;
+          PentagonPoint[i].X:=PentagonPoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].Y:=HexagonPoint[i].Y+move_value;
+          HexagonPoint[i].X:=HexagonPoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].Y:=TrianglePoint[i].Y+move_value;
+          TrianglePoint[i].X:=TrianglePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].Y:=RhombusPoint[i].Y+move_value;
+          RhombusPoint[i].X:=RhombusPoint[i].X-move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
+procedure TForm1.LeftUpBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].Y:=SquarePoint[i].Y-move_value;
+          SquarePoint[i].X:=SquarePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].Y:=CirclePoint[i].Y-move_value;
+          CirclePoint[i].X:=CirclePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].Y:=PentagonPoint[i].Y-move_value;
+          PentagonPoint[i].X:=PentagonPoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].Y:=HexagonPoint[i].Y-move_value;
+          HexagonPoint[i].X:=HexagonPoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].Y:=TrianglePoint[i].Y-move_value;
+          TrianglePoint[i].X:=TrianglePoint[i].X-move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].Y:=RhombusPoint[i].Y-move_value;
+          RhombusPoint[i].X:=RhombusPoint[i].X-move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
+procedure TForm1.LineBtnClick(Sender: TObject);
+begin
+  CanvasBox.Canvas.Pen.Width:= line_width;
+  CanvasBox.Canvas.Pen.Color:= line_color;
+  CanvasBox.Canvas.Pen.Style:= style_line;
+  bitmap.Canvas.Pen.Width:= line_width;
+  bitmap.Canvas.Pen.Color:= line_color;
+  bitmap.Canvas.Pen.Style:= style_line;
 end;
 
 procedure TForm1.LineColorClick(Sender: TObject);
@@ -221,6 +689,16 @@ procedure TForm1.LineColorColorChanged(Sender: TObject);
 begin
   line_color:= LineColor.ButtonColor;
   CanvasBox.Canvas.Pen.Color:= line_color;
+end;
+
+procedure TForm1.MoveSpinChange(Sender: TObject);
+begin
+  move_value:= MoveSpin.Value;
+end;
+
+procedure TForm1.MoveSpinClick(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.ObjekClick(Sender: TObject);
@@ -244,17 +722,21 @@ end;
 procedure TForm1.ClearButtonClick(Sender: TObject);
 begin
 
-  CanvasBox.Canvas.Pen.Color:=clWhite;
-  CanvasBox.Canvas.Brush.Color:=clWhite;
-  CanvasBox.Canvas.FillRect(0,0,width_canvas,height_canvas);
+  if bitmap <> nil then
+      bitmap.Destroy;
+
+  bitmap := TBitmap.Create;
+
+  bitmap.SetSize(CanvasBox.Width, CanvasBox.Height);
+  bitmap.Canvas.FillRect(0,0,bitmap.Width,bitmap.Height);
+
+  bitmap.Canvas.Pen.Color:=clWhite;
+  bitmap.Canvas.Brush.Color:=clWhite;
 
   line_color:= LineColor.ButtonColor;
   line_width:= WidthSpin.Value;
 
-  CanvasBox.Canvas.Pen.Color := line_color;
-  CanvasBox.Canvas.Pen.Width := line_width;
-
-  //CanvasBoxPaint(Sender);
+  CanvasBoxPaint(Sender);
 end;
 
 procedure TForm1.PencilBtnClick(Sender: TObject);
@@ -262,18 +744,188 @@ begin
   CanvasBox.Canvas.Pen.Width:= line_width;
   CanvasBox.Canvas.Pen.Color:= line_color;
   CanvasBox.Canvas.Pen.Style:= style_line;
+  bitmap.Canvas.Pen.Width:= line_width;
+  bitmap.Canvas.Pen.Color:= line_color;
+  bitmap.Canvas.Pen.Style:= style_line;
+end;
+
+procedure TForm1.PentagonBtnClick(Sender: TObject);
+begin
+  selected_object:= 'Pentagon';
+end;
+
+procedure TForm1.RhombusBtnClick(Sender: TObject);
+begin
+  selected_object:= 'Rhombus';
+end;
+
+procedure TForm1.RightBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].X:=SquarePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].X:=CirclePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].X:=PentagonPoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].X:=HexagonPoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].X:=TrianglePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].X:=RhombusPoint[i].X+move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
+procedure TForm1.RightDownBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].Y:=SquarePoint[i].Y+move_value;
+          SquarePoint[i].X:=SquarePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].Y:=CirclePoint[i].Y+move_value;
+          CirclePoint[i].X:=CirclePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].Y:=PentagonPoint[i].Y+move_value;
+          PentagonPoint[i].X:=PentagonPoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].Y:=HexagonPoint[i].Y+move_value;
+          HexagonPoint[i].X:=HexagonPoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].Y:=TrianglePoint[i].Y+move_value;
+          TrianglePoint[i].X:=TrianglePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].Y:=RhombusPoint[i].Y+move_value;
+          RhombusPoint[i].X:=RhombusPoint[i].X+move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
+procedure TForm1.RightUpBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].Y:=SquarePoint[i].Y-move_value;
+          SquarePoint[i].X:=SquarePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].Y:=CirclePoint[i].Y-move_value;
+          CirclePoint[i].X:=CirclePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].Y:=PentagonPoint[i].Y-move_value;
+          PentagonPoint[i].X:=PentagonPoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].Y:=HexagonPoint[i].Y-move_value;
+          HexagonPoint[i].X:=HexagonPoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].Y:=TrianglePoint[i].Y-move_value;
+          TrianglePoint[i].X:=TrianglePoint[i].X+move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].Y:=RhombusPoint[i].Y-move_value;
+          RhombusPoint[i].X:=RhombusPoint[i].X+move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
 end;
 
 procedure TForm1.SaveButtonClick(Sender: TObject);
 begin
-  //SaveDialog1.Execute;
-  //if SaveDialog1.Files.Count > 0 then begin
-  //      if RightStr(SaveDialog1.FileName, 4) <> '.png' then
-  //         SaveDialog1.FileName:=SaveDialog1.FileName+'.png';
-  //
-  //      bitmap.SaveToFile(SaveDialog1.FileName);
-  //end;
-
   if SaveDialog1.Execute then
   begin
      if FileExists(SaveDialog1.FileName) then
@@ -290,10 +942,199 @@ begin
   end;
 end;
 
+procedure TForm1.SquareBtnClick(Sender: TObject);
+begin
+  selected_object:= 'Square';
+end;
+
+procedure TForm1.TriangleBtnClick(Sender: TObject);
+begin
+  selected_object:= 'Triangle';
+end;
+
+procedure TForm1.UpBtnClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].Y:=SquarePoint[i].Y-move_value;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].Y:=CirclePoint[i].Y-move_value;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].Y:=PentagonPoint[i].Y-move_value;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].Y:=HexagonPoint[i].Y-move_value;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].Y:=TrianglePoint[i].Y-move_value;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].Y:=RhombusPoint[i].Y-move_value;
+     end;
+  end;
+
+  MidPoint;
+  DrawObject(Sender);
+end;
+
 procedure TForm1.WidthSpinChange(Sender: TObject);
 begin
   line_width:= WidthSpin.Value;
   CanvasBox.Canvas.Pen.Width:= line_width;
+end;
+
+procedure TForm1.WidthSpinClick(Sender: TObject);
+begin
+
+end;
+
+procedure TForm1.DrawObject(Sender: TObject);
+begin
+  ClearButtonClick(Sender);
+  //CanvasBox.Canvas.Brush.Color:=clWhite;
+  //CanvasBox.Canvas.Brush.Style:=bsSolid;
+  //CanvasBox.Canvas.Pen.Color:=clWhite;
+  //CanvasBox.Canvas.FillRect(0,0,CanvasBox.Width,CanvasBox.Height);
+
+  CanvasBox.Canvas.Pen.Color:=line_color;
+  CanvasBox.Canvas.Pen.Width:=line_width;
+  CanvasBox.Canvas.Pen.Style:=style_line;
+
+  if (selected_object = 'Square') then
+  begin
+    CanvasBox.Canvas.Polyline(SquarePoint);
+    bitmap.Canvas.Polyline(SquarePoint);
+  end
+  else if (selected_object = 'Circle') then
+  begin
+    CanvasBox.Canvas.Ellipse(CirclePoint[1].x,CirclePoint[1].y,CirclePoint[2].x,CirclePoint[2].y);
+    bitmap.Canvas.Ellipse(CirclePoint[1].x,CirclePoint[1].y,CirclePoint[2].x,CirclePoint[2].y);
+  end
+  else if (selected_object = 'Pentagon') then
+  begin
+    CanvasBox.Canvas.Polyline(PentagonPoint);
+    bitmap.Canvas.Polyline(PentagonPoint);
+  end
+  else if (selected_object = 'Hexagon') then
+  begin
+    CanvasBox.Canvas.Polyline(HexagonPoint);
+    bitmap.Canvas.Polyline(HexagonPoint);
+  end
+  else if (selected_object = 'Triangle') then
+  begin
+    CanvasBox.Canvas.Polyline(TrianglePoint);
+    bitmap.Canvas.Polyline(TrianglePoint);
+  end
+  else if (selected_object = 'Rhombus') then
+  begin
+    CanvasBox.Canvas.Polyline(RhombusPoint);
+    bitmap.Canvas.Polyline(RhombusPoint);
+  end;
+end;
+
+procedure TForm1.MidPoint;
+var
+  i, tx, ty : Integer;
+begin
+  tx:=0; ty:=0;
+
+  if (selected_object = 'Square') then
+  begin
+     for i:=1 to 4 do
+     begin
+          tx := tx + SquarePoint[i].x;
+     end;
+     for i:=1 to 4 do
+     begin
+           ty := ty + SquarePoint[i].y;
+     end;
+     TOB.x := round(tx/4);
+     TOB.y := round(ty/4);
+  end
+  else if (selected_object = 'Circle') then
+  begin
+     TOB.x := round((CirclePoint[1].x+CirclePoint[2].x)/2);
+     TOB.y := round((CirclePoint[1].y+CirclePoint[2].y)/2);
+     r:=CirclePoint[2].X-TOB.X;
+  end
+  else if (selected_object = 'Pentagon') then
+  begin
+     for i:=1 to 5 do
+     begin
+          tx := tx + PentagonPoint[i].x;
+     end;
+     for i:=1 to 5 do
+     begin
+           ty := ty + PentagonPoint[i].y;
+     end;
+     TOB.x := round(tx/5);
+     TOB.y := round(ty/5);
+  end
+  else if (selected_object = 'Hexagon') then
+  begin
+     for i:=1 to 6 do
+     begin
+          tx := tx + HexagonPoint[i].x;
+     end;
+     for i:=1 to 6 do
+     begin
+           ty := ty + HexagonPoint[i].y;
+     end;
+     TOB.x := round(tx/6);
+     TOB.y := round(ty/6);
+  end
+  else if (selected_object = 'Triangle') then
+  begin
+     for i:=1 to 3 do
+     begin
+          tx := tx + TrianglePoint[i].x;
+     end;
+     for i:=1 to 3 do
+     begin
+           ty := ty + TrianglePoint[i].y;
+     end;
+     TOB.x := round(tx/3);
+     TOB.y := round(ty/3);
+  end
+  else if (selected_object = 'Rhombus') then
+  begin
+     for i:=1 to 4 do
+     begin
+          tx := tx + RhombusPoint[i].x;
+     end;
+     for i:=1 to 4 do
+     begin
+           ty := ty + RhombusPoint[i].y;
+     end;
+     TOB.x := round(tx/4);
+     TOB.y := round(ty/4);
+  end;
 end;
 
 end.
