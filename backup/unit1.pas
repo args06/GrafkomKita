@@ -13,6 +13,12 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    SpinSkew: TSpinEdit;
+    VerticalSkew: TBitBtn;
+    HorizontalSkew: TBitBtn;
+    SkewBox: TGroupBox;
+    HorizontalFlip: TBitBtn;
+    VerticalFlip: TBitBtn;
     RotateRight: TBitBtn;
     RotateLeft: TBitBtn;
     MinusBtn: TBitBtn;
@@ -83,6 +89,7 @@ type
     procedure EraserBtnClick(Sender: TObject);
     procedure FillColorColorChanged(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure SkewBoxClick(Sender: TObject);
     procedure HexagonBtnClick(Sender: TObject);
     procedure LeftBtnClick(Sender: TObject);
     procedure LeftDownBtnClick(Sender: TObject);
@@ -496,6 +503,11 @@ begin
 
   ClearButtonClick(Sender);
   CanvasBoxPaint(Sender);
+end;
+
+procedure TForm1.SkewBoxClick(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.HexagonBtnClick(Sender: TObject);
