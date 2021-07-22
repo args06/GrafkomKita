@@ -89,6 +89,8 @@ type
     procedure EraserBtnClick(Sender: TObject);
     procedure FillColorColorChanged(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure HorizontalSkewClick(Sender: TObject);
+    procedure RotateSpinChange(Sender: TObject);
     procedure SkewBoxClick(Sender: TObject);
     procedure HexagonBtnClick(Sender: TObject);
     procedure LeftBtnClick(Sender: TObject);
@@ -114,14 +116,17 @@ type
     procedure RotateLeftClick(Sender: TObject);
     procedure RotateRightClick(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
+    procedure SpinSkewChange(Sender: TObject);
     procedure SquareBtnClick(Sender: TObject);
     procedure TriangleBtnClick(Sender: TObject);
     procedure UpBtnClick(Sender: TObject);
+    procedure VerticalSkewClick(Sender: TObject);
     procedure WidthSpinChange(Sender: TObject);
     procedure WidthSpinClick(Sender: TObject);
     procedure MidPoint;
     procedure DrawObject(Sender: TObject);
     procedure RotatingObject(Sender: TObject);
+    procedure SkewingObject(Sender: TObject);
   private
 
   public
@@ -147,6 +152,7 @@ var
   fill_color: Integer;
   preX, preY: Integer;
   move_value: Integer;
+  skew_value: Integer;
   rotate_value: Double;
   r: Integer;
 
@@ -500,9 +506,18 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-
   ClearButtonClick(Sender);
   CanvasBoxPaint(Sender);
+end;
+
+procedure TForm1.HorizontalSkewClick(Sender: TObject);
+begin
+  SkewingObject(Sender);
+end;
+
+procedure TForm1.RotateSpinChange(Sender: TObject);
+begin
+  rotate_value:= RotateSpin.Value;
 end;
 
 procedure TForm1.SkewBoxClick(Sender: TObject);
@@ -745,6 +760,8 @@ begin
 
   line_color:= LineColor.ButtonColor;
   line_width:= WidthSpin.Value;
+  rotate_value:= RotateSpin.Value;
+  move_value:= MoveSpin.Value;
 
   CanvasBoxPaint(Sender);
 end;
@@ -1042,6 +1059,114 @@ begin
   RotatingObject(Sender);
 end;
 
+procedure TForm1.SkewingObject(Sender: TObject);
+var
+  i,tx,ty : integer;
+begin
+
+  if selected_object = 'Square' then
+  begin
+     if HorizontalSkew.Active = True then
+     begin
+        SquarePoint[1].X:=SquarePoint[1].X+skew_value;
+        SquarePoint[2].X:=SquarePoint[2].X+skew_value;
+        SquarePoint[3].X:=SquarePoint[3].X-skew_value;
+        SquarePoint[4].X:=SquarePoint[4].X-skew_value;
+        SquarePoint[5].X:=SquarePoint[1].X;
+     end
+     else if VerticalSkew.Active = True then
+     begin
+        SquarePoint[1].Y:=SquarePoint[1].Y+skew_value;
+        SquarePoint[2].Y:=SquarePoint[2].Y-skew_value;
+        SquarePoint[3].Y:=SquarePoint[3].Y-skew_value;
+        SquarePoint[4].Y:=SquarePoint[4].Y+skew_value;
+        SquarePoint[5].Y:=SquarePoint[1].Y;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     if HorizontalSkew.Active = True then
+     begin
+        PentagonPoint[1].X:=PentagonPoint[1].X+skew_value;
+        PentagonPoint[2].X:=PentagonPoint[2].X+skew_value;
+        PentagonPoint[3].X:=PentagonPoint[3].X+skew_value;
+        PentagonPoint[4].X:=PentagonPoint[4].X-skew_value;
+        PentagonPoint[5].X:=PentagonPoint[5].X-skew_value;
+        PentagonPoint[6].X:=PentagonPoint[1].X;
+     end
+     else if VerticalSkew.Active = True then
+     begin
+        PentagonPoint[1].Y:=PentagonPoint[1].Y+skew_value;
+        PentagonPoint[2].Y:=PentagonPoint[2].Y;
+        PentagonPoint[3].Y:=PentagonPoint[3].Y-skew_value;
+        PentagonPoint[4].Y:=PentagonPoint[4].Y-skew_value;
+        PentagonPoint[5].Y:=PentagonPoint[5].Y+skew_value;
+        PentagonPoint[6].Y:=PentagonPoint[1].Y;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     if HorizontalSkew.Active = True then
+     begin
+        HexagonPoint[1].X:=HexagonPoint[1].X;
+        HexagonPoint[2].X:=HexagonPoint[2].X+skew_value;
+        HexagonPoint[3].X:=HexagonPoint[3].X+skew_value;
+        HexagonPoint[4].X:=HexagonPoint[4].X;
+        HexagonPoint[5].X:=HexagonPoint[5].X-skew_value;
+        HexagonPoint[6].X:=HexagonPoint[6].X-skew_value;
+        HexagonPoint[7].X:=HexagonPoint[1].X;
+     end
+     else if VerticalSkew.Active = True then
+     begin
+        HexagonPoint[1].Y:=HexagonPoint[1].Y+skew_value;
+        HexagonPoint[2].Y:=HexagonPoint[2].Y+skew_value;
+        HexagonPoint[3].Y:=HexagonPoint[3].Y-skew_value;
+        HexagonPoint[4].Y:=HexagonPoint[4].Y-skew_value;
+        HexagonPoint[5].Y:=HexagonPoint[5].Y-skew_value;
+        HexagonPoint[6].Y:=HexagonPoint[6].Y+skew_value;
+        HexagonPoint[7].Y:=HexagonPoint[1].Y;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     if HorizontalSkew.Active = True then
+     begin
+        TrianglePoint[1].X:=TrianglePoint[1].X-skew_value;
+        TrianglePoint[2].X:=TrianglePoint[2].X+skew_value;
+        TrianglePoint[3].X:=TrianglePoint[3].X-skew_value;
+        TrianglePoint[4].X:=TrianglePoint[1].X;
+     end
+     else if VerticalSkew.Active = True then
+     begin
+        TrianglePoint[1].Y:=TrianglePoint[1].Y+skew_value;
+        TrianglePoint[2].Y:=TrianglePoint[2].Y;
+        TrianglePoint[3].Y:=TrianglePoint[3].Y-skew_value;
+        TrianglePoint[4].Y:=TrianglePoint[1].Y;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     if HorizontalSkew.Active = True then
+     begin
+        RhombusPoint[1].X:=RhombusPoint[1].X;
+        RhombusPoint[2].X:=RhombusPoint[2].X+skew_value;
+        RhombusPoint[3].X:=RhombusPoint[3].X;
+        RhombusPoint[4].X:=RhombusPoint[4].X-skew_value;
+        RhombusPoint[5].X:=RhombusPoint[1].X;
+     end
+     else if VerticalSkew.Active = True then
+     begin
+        RhombusPoint[1].Y:=RhombusPoint[1].Y+skew_value;
+        RhombusPoint[2].Y:=RhombusPoint[2].Y;
+        RhombusPoint[3].Y:=RhombusPoint[3].Y-skew_value;
+        RhombusPoint[4].Y:=RhombusPoint[4].Y;
+        RhombusPoint[5].Y:=RhombusPoint[1].Y;
+     end;
+  end;
+
+  DrawObject(Sender);
+end;
+
 procedure TForm1.SaveButtonClick(Sender: TObject);
 begin
   if SaveDialog1.Execute then
@@ -1058,6 +1183,11 @@ begin
           bitmap.SaveToFile(SaveDialog1.FileName);
      end;
   end;
+end;
+
+procedure TForm1.SpinSkewChange(Sender: TObject);
+begin
+  skew_value:= SpinSkew.Value;
 end;
 
 procedure TForm1.SquareBtnClick(Sender: TObject);
@@ -1119,6 +1249,11 @@ begin
 
   MidPoint;
   DrawObject(Sender);
+end;
+
+procedure TForm1.VerticalSkewClick(Sender: TObject);
+begin
+  SkewingObject(Sender);
 end;
 
 procedure TForm1.WidthSpinChange(Sender: TObject);
