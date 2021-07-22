@@ -90,6 +90,8 @@ type
     procedure FillColorColorChanged(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure HorizontalSkewClick(Sender: TObject);
+    procedure MinusBtnClick(Sender: TObject);
+    procedure PlusBtnClick(Sender: TObject);
     procedure RotateSpinChange(Sender: TObject);
     procedure SkewBoxClick(Sender: TObject);
     procedure HexagonBtnClick(Sender: TObject);
@@ -513,6 +515,192 @@ end;
 procedure TForm1.HorizontalSkewClick(Sender: TObject);
 begin
   SkewingObject(Sender);
+end;
+
+procedure TForm1.MinusBtnClick(Sender: TObject);
+var
+  i : integer;
+begin
+  MidPoint;
+
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].X:=SquarePoint[i].X-TOB.x;
+          SquarePoint[i].Y:=SquarePoint[i].Y-TOB.y;
+
+          SquarePoint[i].X:=round(SquarePoint[i].X * 0.5);
+          SquarePoint[i].Y:=round(SquarePoint[i].Y * 0.5);
+
+          SquarePoint[i].X:=SquarePoint[i].X+TOB.x;
+          SquarePoint[i].Y:=SquarePoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].X:=PentagonPoint[i].X-TOB.x;
+          PentagonPoint[i].Y:=PentagonPoint[i].Y-TOB.y;
+
+          PentagonPoint[i].X:=round(PentagonPoint[i].X * 0.5);
+          PentagonPoint[i].Y:=round(PentagonPoint[i].Y * 0.5);
+
+          PentagonPoint[i].X:=PentagonPoint[i].X+TOB.x;
+          PentagonPoint[i].Y:=PentagonPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].X:=HexagonPoint[i].X-TOB.x;
+          HexagonPoint[i].Y:=HexagonPoint[i].Y-TOB.y;
+
+          HexagonPoint[i].X:=round(HexagonPoint[i].X * 0.5);
+          HexagonPoint[i].Y:=round(HexagonPoint[i].Y * 0.5);
+
+          HexagonPoint[i].X:=HexagonPoint[i].X+TOB.x;
+          HexagonPoint[i].Y:=HexagonPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].X:=TrianglePoint[i].X-TOB.x;
+          TrianglePoint[i].Y:=TrianglePoint[i].Y-TOB.y;
+
+          TrianglePoint[i].X:=round(TrianglePoint[i].X * 0.5);
+          TrianglePoint[i].Y:=round(TrianglePoint[i].Y * 0.5);
+
+          TrianglePoint[i].X:=TrianglePoint[i].X+TOB.x;
+          TrianglePoint[i].Y:=TrianglePoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].X:=RhombusPoint[i].X-TOB.x;
+          RhombusPoint[i].Y:=RhombusPoint[i].Y-TOB.y;
+
+          RhombusPoint[i].X:=round(RhombusPoint[i].X * 0.5);
+          RhombusPoint[i].Y:=round(RhombusPoint[i].Y * 0.5);
+
+          RhombusPoint[i].X:=RhombusPoint[i].X+TOB.x;
+          RhombusPoint[i].Y:=RhombusPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].X:=CirclePoint[i].X-TOB.x;
+          CirclePoint[i].Y:=CirclePoint[i].Y-TOB.y;
+
+          CirclePoint[i].X:=round(CirclePoint[i].X * 0.5);
+          CirclePoint[i].Y:=round(CirclePoint[i].Y * 0.5);
+
+          CirclePoint[i].X:=CirclePoint[i].X+TOB.x;
+          CirclePoint[i].Y:=CirclePoint[i].Y+TOB.y;
+     end;
+  end;
+  DrawObject(Sender);
+end;
+
+procedure TForm1.PlusBtnClick(Sender: TObject);
+var
+  i : integer;
+begin
+  MidPoint;
+
+  if selected_object = 'Square' then
+  begin
+     for i:=1 to 5 do
+     begin
+          SquarePoint[i].X:=SquarePoint[i].X-TOB.x;
+          SquarePoint[i].Y:=SquarePoint[i].Y-TOB.y;
+
+          SquarePoint[i].X:=round(SquarePoint[i].X * 1.5);
+          SquarePoint[i].Y:=round(SquarePoint[i].Y * 1.5);
+
+          SquarePoint[i].X:=SquarePoint[i].X+TOB.x;
+          SquarePoint[i].Y:=SquarePoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Pentagon' then
+  begin
+     for i:=1 to 6 do
+     begin
+          PentagonPoint[i].X:=PentagonPoint[i].X-TOB.x;
+          PentagonPoint[i].Y:=PentagonPoint[i].Y-TOB.y;
+
+          PentagonPoint[i].X:=round(PentagonPoint[i].X * 1.5);
+          PentagonPoint[i].Y:=round(PentagonPoint[i].Y * 1.5);
+
+          PentagonPoint[i].X:=PentagonPoint[i].X+TOB.x;
+          PentagonPoint[i].Y:=PentagonPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Hexagon' then
+  begin
+     for i:=1 to 7 do
+     begin
+          HexagonPoint[i].X:=HexagonPoint[i].X-TOB.x;
+          HexagonPoint[i].Y:=HexagonPoint[i].Y-TOB.y;
+
+          HexagonPoint[i].X:=round(HexagonPoint[i].X * 1.5);
+          HexagonPoint[i].Y:=round(HexagonPoint[i].Y * 1.5);
+
+          HexagonPoint[i].X:=HexagonPoint[i].X+TOB.x;
+          HexagonPoint[i].Y:=HexagonPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Triangle' then
+  begin
+     for i:=1 to 4 do
+     begin
+          TrianglePoint[i].X:=TrianglePoint[i].X-TOB.x;
+          TrianglePoint[i].Y:=TrianglePoint[i].Y-TOB.y;
+
+          TrianglePoint[i].X:=round(TrianglePoint[i].X * 1.5);
+          TrianglePoint[i].Y:=round(TrianglePoint[i].Y * 1.5);
+
+          TrianglePoint[i].X:=TrianglePoint[i].X+TOB.x;
+          TrianglePoint[i].Y:=TrianglePoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Rhombus' then
+  begin
+     for i:=1 to 5 do
+     begin
+          RhombusPoint[i].X:=RhombusPoint[i].X-TOB.x;
+          RhombusPoint[i].Y:=RhombusPoint[i].Y-TOB.y;
+
+          RhombusPoint[i].X:=round(RhombusPoint[i].X * 1.5);
+          RhombusPoint[i].Y:=round(RhombusPoint[i].Y * 1.5);
+
+          RhombusPoint[i].X:=RhombusPoint[i].X+TOB.x;
+          RhombusPoint[i].Y:=RhombusPoint[i].Y+TOB.y;
+     end;
+  end
+  else if selected_object = 'Circle' then
+  begin
+     for i:=1 to 2 do
+     begin
+          CirclePoint[i].X:=CirclePoint[i].X-TOB.x;
+          CirclePoint[i].Y:=CirclePoint[i].Y-TOB.y;
+
+          CirclePoint[i].X:=round(CirclePoint[i].X * 1.5);
+          CirclePoint[i].Y:=round(CirclePoint[i].Y * 1.5);
+
+          CirclePoint[i].X:=CirclePoint[i].X+TOB.x;
+          CirclePoint[i].Y:=CirclePoint[i].Y+TOB.y;
+     end;
+  end;
+  DrawObject(Sender);
 end;
 
 procedure TForm1.RotateSpinChange(Sender: TObject);

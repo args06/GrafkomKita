@@ -1,59 +1,58 @@
 object Form1: TForm1
-  Left = 1
-  Height = 930
-  Top = 1
-  Width = 1841
+  Left = 1256
+  Height = 687
+  Top = 120
+  Width = 1360
   Caption = 'Grafkom Kita'
-  ClientHeight = 0
-  ClientWidth = 0
+  ClientHeight = 687
+  ClientWidth = 1360
   Color = clGradientActiveCaption
-  DesignTimePPI = 130
   OnCreate = FormCreate
   LCLVersion = '2.0.12.0'
   object ToolBox: TGroupBox
     Left = 0
-    Height = 206
+    Height = 152
     Top = 0
-    Width = 1996
-    ClientHeight = 180
-    ClientWidth = 1992
+    Width = 1474
+    ClientHeight = 132
+    ClientWidth = 1470
     Color = clMenu
     ParentColor = False
     ParentFont = False
     TabOrder = 0
     object ObjekBox: TGroupBox
-      Left = 248
-      Height = 164
+      Left = 183
+      Height = 121
       Top = 0
-      Width = 238
+      Width = 176
       Caption = 'Objek'
-      ClientHeight = 138
-      ClientWidth = 234
+      ClientHeight = 101
+      ClientWidth = 172
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 0
       OnClick = ObjekClick
       object ScrollBox1: TScrollBox
-        Left = 11
-        Height = 122
+        Left = 8
+        Height = 90
         Top = 0
-        Width = 216
-        HorzScrollBar.Page = 173
-        VertScrollBar.Page = 118
-        ClientHeight = 118
-        ClientWidth = 189
+        Width = 160
+        HorzScrollBar.Page = 128
+        VertScrollBar.Page = 86
+        ClientHeight = 86
+        ClientWidth = 139
         ParentFont = False
         TabOrder = 0
         object CircleBtn: TBitBtn
-          Left = 11
-          Height = 68
-          Top = 11
-          Width = 76
+          Left = 8
+          Height = 50
+          Top = 8
+          Width = 56
           Caption = 'Circle'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -11
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -117,14 +116,14 @@ object Form1: TForm1
           TabOrder = 0
         end
         object SquareBtn: TBitBtn
-          Left = 97
-          Height = 68
-          Top = 11
-          Width = 76
+          Left = 72
+          Height = 50
+          Top = 8
+          Width = 56
           Caption = 'Square'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -11
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -188,14 +187,14 @@ object Form1: TForm1
           TabOrder = 1
         end
         object PentagonBtn: TBitBtn
-          Left = 11
-          Height = 68
-          Top = 86
-          Width = 76
+          Left = 8
+          Height = 50
+          Top = 64
+          Width = 56
           Caption = 'Pentagon'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -11
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -259,14 +258,14 @@ object Form1: TForm1
           TabOrder = 2
         end
         object HexagonBtn: TBitBtn
-          Left = 97
-          Height = 68
-          Top = 86
-          Width = 76
+          Left = 72
+          Height = 50
+          Top = 64
+          Width = 56
           Caption = 'Hexagon'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -11
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -330,14 +329,14 @@ object Form1: TForm1
           TabOrder = 3
         end
         object TriangleBtn: TBitBtn
-          Left = 11
-          Height = 68
-          Top = 162
-          Width = 76
+          Left = 8
+          Height = 50
+          Top = 120
+          Width = 56
           Caption = 'Triangle'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -11
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -401,14 +400,14 @@ object Form1: TForm1
           TabOrder = 4
         end
         object RhombusBtn: TBitBtn
-          Left = 97
-          Height = 68
-          Top = 162
-          Width = 76
+          Left = 72
+          Height = 50
+          Top = 120
+          Width = 56
           Caption = 'Rhombus'
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -15
+          Font.Height = -11
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -469,23 +468,23 @@ object Form1: TForm1
       end
     end
     object FileBox: TGroupBox
-      Left = 24
-      Height = 164
+      Left = 18
+      Height = 121
       Top = 0
-      Width = 218
+      Width = 161
       Caption = 'File'
-      ClientHeight = 138
-      ClientWidth = 214
+      ClientHeight = 101
+      ClientWidth = 157
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 1
       OnClick = FileBoxClick
       object OpenButton: TSpeedButton
-        Left = 11
-        Height = 38
-        Top = 11
-        Width = 81
+        Left = 8
+        Height = 28
+        Top = 8
+        Width = 60
         Caption = 'Open'
         Color = clDefault
         Glyph.Data = {
@@ -524,10 +523,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object ClearButton: TSpeedButton
-        Left = 66
-        Height = 38
-        Top = 69
-        Width = 81
+        Left = 49
+        Height = 28
+        Top = 51
+        Width = 60
         Caption = 'Clear'
         Glyph.Data = {
           BA030000424DBA0300000000000036000000280000000F0000000F0000000100
@@ -565,10 +564,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object SaveButton: TSpeedButton
-        Left = 116
-        Height = 38
-        Top = 11
-        Width = 81
+        Left = 86
+        Height = 28
+        Top = 8
+        Width = 60
         Caption = 'Save'
         Glyph.Data = {
           BA030000424DBA0300000000000036000000280000000F0000000F0000000100
@@ -607,22 +606,22 @@ object Form1: TForm1
       end
     end
     object DrawBox: TGroupBox
-      Left = 496
-      Height = 164
+      Left = 366
+      Height = 121
       Top = 0
-      Width = 181
+      Width = 134
       Caption = 'Draw'
-      ClientHeight = 138
-      ClientWidth = 177
+      ClientHeight = 101
+      ClientWidth = 130
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 2
       object PencilBtn: TBitBtn
-        Left = 11
-        Height = 51
-        Top = 3
-        Width = 66
+        Left = 8
+        Height = 38
+        Top = 2
+        Width = 49
         Glyph.Data = {
           76060000424D7606000000000000360000002800000014000000140000000100
           2000000000004006000064000000640000000000000000000000822434A1670D
@@ -682,10 +681,10 @@ object Form1: TForm1
         TabOrder = 0
       end
       object LineBtn: TBitBtn
-        Left = 97
-        Height = 51
-        Top = 3
-        Width = 66
+        Left = 72
+        Height = 38
+        Top = 2
+        Width = 49
         Glyph.Data = {
           76060000424D7606000000000000360000002800000014000000140000000100
           2000000000004006000064000000640000000000000000000000000000090000
@@ -745,10 +744,10 @@ object Form1: TForm1
         TabOrder = 1
       end
       object EraserBtn: TBitBtn
-        Left = 54
-        Height = 51
-        Top = 66
-        Width = 66
+        Left = 40
+        Height = 38
+        Top = 49
+        Width = 49
         Glyph.Data = {
           76060000424D7606000000000000360000002800000014000000140000000100
           2000000000004006000064000000640000000000000000000000000000000000
@@ -809,51 +808,51 @@ object Form1: TForm1
       end
     end
     object LineBox: TGroupBox
-      Left = 688
-      Height = 164
+      Left = 508
+      Height = 121
       Top = 0
-      Width = 162
+      Width = 120
       Caption = 'Line'
-      ClientHeight = 138
-      ClientWidth = 158
+      ClientHeight = 101
+      ClientWidth = 116
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 3
       object WidthLabel: TLabel
-        Left = 54
-        Height = 21
-        Top = 3
-        Width = 42
+        Left = 40
+        Height = 15
+        Top = 2
+        Width = 32
         Caption = 'Width'
         ParentColor = False
         ParentFont = False
       end
       object DashLabel: TLabel
-        Left = 54
-        Height = 21
-        Top = 69
-        Width = 35
+        Left = 40
+        Height = 15
+        Top = 51
+        Width = 26
         Caption = 'Dash'
         ParentColor = False
         ParentFont = False
       end
       object WidthSpin: TSpinEdit
-        Left = 22
-        Height = 29
-        Top = 31
-        Width = 119
+        Left = 16
+        Height = 23
+        Top = 23
+        Width = 88
         OnChange = WidthSpinChange
         ParentFont = False
         TabOrder = 0
         Value = 1
       end
       object dash_box: TComboBox
-        Left = 22
-        Height = 29
-        Top = 95
-        Width = 119
-        ItemHeight = 21
+        Left = 16
+        Height = 23
+        Top = 70
+        Width = 88
+        ItemHeight = 15
         ItemIndex = 0
         Items.Strings = (
           'Solid'
@@ -870,22 +869,22 @@ object Form1: TForm1
       end
     end
     object ColorBox: TGroupBox
-      Left = 856
-      Height = 164
+      Left = 632
+      Height = 121
       Top = 0
-      Width = 162
+      Width = 120
       Caption = 'Color'
-      ClientHeight = 138
-      ClientWidth = 158
+      ClientHeight = 101
+      ClientWidth = 116
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 4
       object LineColor: TColorButton
-        Left = 11
-        Height = 51
-        Top = 31
-        Width = 52
+        Left = 8
+        Height = 38
+        Top = 23
+        Width = 38
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBackground
@@ -894,10 +893,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object FillColor: TColorButton
-        Left = 85
-        Height = 51
-        Top = 31
-        Width = 52
+        Left = 63
+        Height = 38
+        Top = 23
+        Width = 38
         BorderWidth = 2
         ButtonColorSize = 16
         ButtonColor = clBlack
@@ -905,29 +904,29 @@ object Form1: TForm1
         ParentFont = False
       end
       object LineLabel: TLabel
-        Left = 23
-        Height = 21
-        Top = 8
-        Width = 29
+        Left = 17
+        Height = 15
+        Top = 6
+        Width = 22
         Caption = 'LIne'
         ParentColor = False
         ParentFont = False
         OnClick = LineLabelClick
       end
       object FillLabel: TLabel
-        Left = 101
-        Height = 21
-        Top = 8
-        Width = 20
+        Left = 75
+        Height = 15
+        Top = 6
+        Width = 15
         Caption = 'Fill'
         ParentColor = False
         ParentFont = False
       end
       object BucketBtn: TBitBtn
-        Left = 11
-        Height = 43
-        Top = 87
-        Width = 53
+        Left = 8
+        Height = 32
+        Top = 64
+        Width = 39
         Glyph.Data = {
           46050000424D4605000000000000360000002800000012000000120000000100
           2000000000001005000064000000640000000000000000000000000000000000
@@ -977,10 +976,10 @@ object Form1: TForm1
         TabOrder = 0
       end
       object EyedropBtn: TBitBtn
-        Left = 85
-        Height = 43
-        Top = 87
-        Width = 52
+        Left = 63
+        Height = 32
+        Top = 64
+        Width = 38
         Glyph.Data = {
           46050000424D4605000000000000360000002800000012000000120000000100
           200000000000100500006400000064000000000000000000000000000000FF80
@@ -1031,22 +1030,22 @@ object Form1: TForm1
       end
     end
     object MoveBox: TGroupBox
-      Left = 1024
-      Height = 164
+      Left = 756
+      Height = 121
       Top = 0
-      Width = 206
+      Width = 152
       Caption = 'Move'
-      ClientHeight = 138
-      ClientWidth = 202
+      ClientHeight = 101
+      ClientWidth = 148
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 5
       object LeftUpBtn: TSpeedButton
-        Left = 11
-        Height = 32
-        Top = 14
-        Width = 42
+        Left = 8
+        Height = 24
+        Top = 10
+        Width = 31
         Glyph.Data = {
           76020000424D760200000000000036000000280000000C0000000C0000000100
           2000000000004002000064000000640000000000000000000000000000000000
@@ -1073,10 +1072,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object UpBtn: TSpeedButton
-        Left = 76
-        Height = 32
-        Top = 14
-        Width = 44
+        Left = 56
+        Height = 24
+        Top = 10
+        Width = 32
         Glyph.Data = {
           BA030000424DBA0300000000000036000000280000000F0000000F0000000100
           2000000000008403000064000000640000000000000000000000000000000000
@@ -1113,10 +1112,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object LeftBtn: TSpeedButton
-        Left = 11
-        Height = 35
-        Top = 54
-        Width = 42
+        Left = 8
+        Height = 26
+        Top = 40
+        Width = 31
         Glyph.Data = {
           BA030000424DBA0300000000000036000000280000000F0000000F0000000100
           2000000000008403000064000000640000000000000000000000000000000000
@@ -1153,10 +1152,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object RightUpBtn: TSpeedButton
-        Left = 141
-        Height = 32
-        Top = 14
-        Width = 44
+        Left = 104
+        Height = 24
+        Top = 10
+        Width = 32
         Glyph.Data = {
           76020000424D760200000000000036000000280000000C0000000C0000000100
           2000000000004002000064000000640000000000000000000000000000A80000
@@ -1183,10 +1182,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object RightBtn: TSpeedButton
-        Left = 141
-        Height = 35
-        Top = 54
-        Width = 44
+        Left = 104
+        Height = 26
+        Top = 40
+        Width = 32
         Glyph.Data = {
           BA030000424DBA0300000000000036000000280000000F0000000F0000000100
           2000000000008403000064000000640000000000000000000000000000000000
@@ -1223,10 +1222,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object LeftDownBtn: TSpeedButton
-        Left = 11
-        Height = 34
-        Top = 95
-        Width = 42
+        Left = 8
+        Height = 25
+        Top = 70
+        Width = 31
         Glyph.Data = {
           76020000424D760200000000000036000000280000000C0000000C0000000100
           2000000000004002000064000000640000000000000000000000000000A40000
@@ -1253,10 +1252,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object DownBtn: TSpeedButton
-        Left = 76
-        Height = 34
-        Top = 95
-        Width = 44
+        Left = 56
+        Height = 25
+        Top = 70
+        Width = 32
         Glyph.Data = {
           BA030000424DBA0300000000000036000000280000000F0000000F0000000100
           2000000000008403000064000000640000000000000000000000000000000000
@@ -1293,10 +1292,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object RightDownBtn: TSpeedButton
-        Left = 141
-        Height = 34
-        Top = 97
-        Width = 44
+        Left = 104
+        Height = 25
+        Top = 72
+        Width = 32
         Glyph.Data = {
           76020000424D760200000000000036000000280000000C0000000C0000000100
           2000000000004002000064000000640000000000000000000000000000000000
@@ -1323,10 +1322,10 @@ object Form1: TForm1
         ParentFont = False
       end
       object MoveSpin: TSpinEdit
-        Left = 66
-        Height = 29
-        Top = 58
-        Width = 66
+        Left = 49
+        Height = 23
+        Top = 43
+        Width = 49
         OnChange = MoveSpinChange
         ParentFont = False
         TabOrder = 0
@@ -1334,22 +1333,22 @@ object Form1: TForm1
       end
     end
     object ScaleBox: TGroupBox
-      Left = 1240
-      Height = 164
+      Left = 916
+      Height = 121
       Top = 0
-      Width = 130
+      Width = 96
       Caption = 'Scale'
-      ClientHeight = 138
-      ClientWidth = 126
+      ClientHeight = 101
+      ClientWidth = 92
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 6
       object PlusBtn: TBitBtn
-        Left = 31
-        Height = 41
-        Top = 14
-        Width = 55
+        Left = 23
+        Height = 30
+        Top = 10
+        Width = 41
         Glyph.Data = {
           76060000424D7606000000000000360000002800000014000000140000000100
           2000000000004006000064000000640000000000000000000000000000000000
@@ -1404,14 +1403,15 @@ object Form1: TForm1
           000000000000000000004EAC485C4FAF4BF44FAE4CF64EAC4965000000000000
           0000000000000000000000000000000000000000000000000000
         }
+        OnClick = PlusBtnClick
         ParentFont = False
         TabOrder = 0
       end
       object MinusBtn: TBitBtn
-        Left = 31
-        Height = 44
-        Top = 70
-        Width = 55
+        Left = 23
+        Height = 32
+        Top = 52
+        Width = 41
         Glyph.Data = {
           76060000424D7606000000000000360000002800000014000000140000000100
           2000000000004006000064000000640000000000000000000000000000000000
@@ -1466,47 +1466,48 @@ object Form1: TForm1
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
+        OnClick = MinusBtnClick
         ParentFont = False
         TabOrder = 1
       end
     end
     object GroupBox1: TGroupBox
-      Left = 1696
-      Height = 164
+      Left = 1252
+      Height = 121
       Top = 0
-      Width = 184
+      Width = 136
       Caption = 'Coordinate'
-      ClientHeight = 138
-      ClientWidth = 180
+      ClientHeight = 101
+      ClientWidth = 132
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 7
       object CoordinateX: TEdit
-        Left = 66
-        Height = 29
-        Top = 22
-        Width = 89
+        Left = 49
+        Height = 23
+        Top = 16
+        Width = 66
         ParentFont = False
         TabOrder = 0
       end
       object CoordinateY: TEdit
-        Left = 66
-        Height = 29
-        Top = 69
-        Width = 89
+        Left = 49
+        Height = 23
+        Top = 51
+        Width = 66
         ParentFont = False
         TabOrder = 1
       end
       object XLabel: TLabel
-        Left = 32
-        Height = 30
-        Top = 23
-        Width = 14
+        Left = 24
+        Height = 21
+        Top = 17
+        Width = 10
         Caption = 'X'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -22
+        Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
@@ -1515,14 +1516,14 @@ object Form1: TForm1
         ParentFont = False
       end
       object YLabel: TLabel
-        Left = 32
-        Height = 30
-        Top = 69
-        Width = 13
+        Left = 24
+        Height = 21
+        Top = 51
+        Width = 10
         Caption = 'Y'
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -22
+        Font.Height = -16
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
@@ -1532,32 +1533,32 @@ object Form1: TForm1
       end
     end
     object RotateBox: TGroupBox
-      Left = 1376
-      Height = 164
+      Left = 1016
+      Height = 121
       Top = 0
-      Width = 176
+      Width = 130
       Caption = 'Rotate'
-      ClientHeight = 138
-      ClientWidth = 172
+      ClientHeight = 101
+      ClientWidth = 126
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 8
       object RotateSpin: TSpinEdit
-        Left = 42
-        Height = 29
-        Top = 49
-        Width = 85
+        Left = 31
+        Height = 23
+        Top = 36
+        Width = 63
         OnChange = RotateSpinChange
         ParentFont = False
         TabOrder = 0
         Value = 1
       end
       object RotateLeft: TBitBtn
-        Left = 25
-        Height = 46
-        Top = 83
-        Width = 54
+        Left = 18
+        Height = 34
+        Top = 61
+        Width = 40
         Glyph.Data = {
           FA090000424DFA09000000000000360000002800000019000000190000000100
           200000000000C409000064000000640000000000000000000000000000000000
@@ -1645,10 +1646,10 @@ object Form1: TForm1
         TabOrder = 1
       end
       object RotateRight: TBitBtn
-        Left = 91
-        Height = 46
-        Top = 83
-        Width = 54
+        Left = 67
+        Height = 34
+        Top = 61
+        Width = 40
         Glyph.Data = {
           FA090000424DFA09000000000000360000002800000019000000190000000100
           200000000000C409000064000000640000000000000000000000000000000000
@@ -1736,10 +1737,10 @@ object Form1: TForm1
         TabOrder = 2
       end
       object HorizontalFlip: TBitBtn
-        Left = 27
-        Height = 44
-        Top = 4
-        Width = 52
+        Left = 20
+        Height = 32
+        Top = 3
+        Width = 38
         Glyph.Data = {
           FA090000424DFA09000000000000360000002800000019000000190000000100
           200000000000C4090000640000006400000000000000000000000000009A0000
@@ -1826,10 +1827,10 @@ object Form1: TForm1
         TabOrder = 3
       end
       object VerticalFlip: TBitBtn
-        Left = 91
-        Height = 44
-        Top = 4
-        Width = 51
+        Left = 67
+        Height = 32
+        Top = 3
+        Width = 38
         Glyph.Data = {
           FA090000424DFA09000000000000360000002800000019000000190000000100
           200000000000C409000064000000640000000000000000000000000000A10000
@@ -1917,23 +1918,23 @@ object Form1: TForm1
       end
     end
     object SkewBox: TGroupBox
-      Left = 1560
-      Height = 164
+      Left = 1152
+      Height = 121
       Top = 0
-      Width = 129
+      Width = 95
       Caption = 'Skew'
-      ClientHeight = 138
-      ClientWidth = 125
+      ClientHeight = 101
+      ClientWidth = 91
       Color = clActiveBorder
       ParentColor = False
       ParentFont = False
       TabOrder = 9
       OnClick = SkewBoxClick
       object HorizontalSkew: TBitBtn
-        Left = 9
-        Height = 55
-        Top = 16
-        Width = 54
+        Left = 7
+        Height = 41
+        Top = 12
+        Width = 40
         Glyph.Data = {
           46110000424D46110000000000003600000028000000270000001C0000000100
           2000000000001011000064000000640000000000000000000000000000AF0000
@@ -2080,10 +2081,10 @@ object Form1: TForm1
         TabOrder = 0
       end
       object VerticalSkew: TBitBtn
-        Left = 67
-        Height = 54
-        Top = 17
-        Width = 54
+        Left = 49
+        Height = 40
+        Top = 13
+        Width = 40
         Glyph.Data = {
           7E120000424D7E1200000000000036000000280000001E000000270000000100
           2000000000004812000064000000640000000000000000000000000000000000
@@ -2240,10 +2241,10 @@ object Form1: TForm1
         TabOrder = 1
       end
       object SpinSkew: TSpinEdit
-        Left = 25
-        Height = 29
-        Top = 83
-        Width = 82
+        Left = 18
+        Height = 23
+        Top = 61
+        Width = 61
         OnChange = SpinSkewChange
         ParentFont = False
         TabOrder = 2
@@ -2252,21 +2253,21 @@ object Form1: TForm1
     end
   end
   object ScrollBox2: TScrollBox
-    Left = 8
-    Height = 761
-    Top = 209
-    Width = 1989
-    HorzScrollBar.Page = 1892
-    VertScrollBar.Page = 756
-    ClientHeight = 757
-    ClientWidth = 1985
+    Left = 6
+    Height = 562
+    Top = 154
+    Width = 1469
+    HorzScrollBar.Page = 1397
+    VertScrollBar.Page = 558
+    ClientHeight = 558
+    ClientWidth = 1465
     ParentFont = False
     TabOrder = 1
     object CanvasBox: TPaintBox
-      Left = 8
-      Height = 740
-      Top = 16
-      Width = 1884
+      Left = 6
+      Height = 546
+      Top = 12
+      Width = 1391
       Color = clWhite
       ParentColor = False
       ParentFont = False
@@ -2278,11 +2279,11 @@ object Form1: TForm1
     end
   end
   object OpenDialog1: TOpenDialog
-    Left = 67
-    Top = 116
+    Left = 49
+    Top = 86
   end
   object SaveDialog1: TSaveDialog
-    Left = 208
-    Top = 116
+    Left = 154
+    Top = 86
   end
 end
